@@ -36,7 +36,7 @@ namespace ExampleOrganization.Application.Features.Auth.Organizations.Queries
                 var allChildren = new List<Organization>();
                 PopulateAllChildrenRecursive(organization, allChildren);
 
-                // Organizasyonun AllChildren property'sine oluşturduğumuz listeyi ata
+                //// Organizasyonun AllChildren property'sine oluşturduğumuz listeyi ata
                 organization.AllChildren = allChildren;
             }
         }
