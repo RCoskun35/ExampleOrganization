@@ -28,7 +28,7 @@ namespace ExampleOrganization.WebAPI.Controllers
             //};
 
             //var json = JsonSerializer.Serialize(response, options);
-            return StatusCode(response.StatusCode, response);
+            return Ok(response);
         }
 
         //[HttpPost]

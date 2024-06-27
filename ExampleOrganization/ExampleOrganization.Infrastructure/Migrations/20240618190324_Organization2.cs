@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ExampleOrganization.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Organization1 : Migration
+    public partial class Organization2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,8 +27,7 @@ namespace ExampleOrganization.Infrastructure.Migrations
                         name: "FK_Organizations_Organizations_ParentId",
                         column: x => x.ParentId,
                         principalTable: "Organizations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

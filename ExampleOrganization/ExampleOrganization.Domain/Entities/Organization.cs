@@ -12,9 +12,6 @@ namespace ExampleOrganization.Domain.Entities
         public string Name{ get; set; }=string.Empty;
         public int? ParentId { get; set; }
         public Organization? Parent { get; set; }
-        public ICollection<Organization> Children { get; set; } = new List<Organization>();
-        public ICollection<Organization> AllChildren { get; set; } = new List<Organization>();
-
 
     }
 }

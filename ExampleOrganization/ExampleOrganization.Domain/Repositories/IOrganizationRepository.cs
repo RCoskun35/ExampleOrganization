@@ -1,4 +1,5 @@
 ﻿using ExampleOrganization.Domain.Abstractions;
+using ExampleOrganization.Domain.Dtos;
 using ExampleOrganization.Domain.Entities;
 using GenericRepository;
 using System;
@@ -11,6 +12,6 @@ namespace ExampleOrganization.Domain.Repositories
 {
     public interface IOrganizationRepository:IRepository<Organization>
     {
-        IQueryable<Organization> GetAllOrganizationWithParent();
+        Task<List<OrganizationResult>> GetAllOrganizationWithParent();
     }
 }

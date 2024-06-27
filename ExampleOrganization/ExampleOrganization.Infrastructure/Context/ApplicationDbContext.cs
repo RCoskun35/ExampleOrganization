@@ -19,10 +19,7 @@ namespace ExampleOrganization.Infrastructure.Context
         {
             builder.ApplyConfigurationsFromAssembly(typeof(DependencyInjection).Assembly);
             builder.Entity<Organization>()
-         .HasOne(o => o.Parent)
-         .WithMany(o => o.Children)
-         .HasForeignKey(o => o.ParentId)
-         .OnDelete(DeleteBehavior.Restrict);
+             .HasOne(o => o.Parent);
 
             builder.Ignore<IdentityUserLogin<Guid>>();
             builder.Ignore<IdentityRoleClaim<Guid>>();

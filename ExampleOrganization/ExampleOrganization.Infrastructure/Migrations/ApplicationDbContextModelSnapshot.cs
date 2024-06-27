@@ -101,15 +101,10 @@ namespace ExampleOrganization.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrganizationId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
 
                     b.HasIndex("ParentId");
 
@@ -138,23 +133,11 @@ namespace ExampleOrganization.Infrastructure.Migrations
 
             modelBuilder.Entity("ExampleOrganization.Domain.Entities.Organization", b =>
                 {
-                    b.HasOne("ExampleOrganization.Domain.Entities.Organization", null)
-                        .WithMany("AllChildren")
-                        .HasForeignKey("OrganizationId");
-
                     b.HasOne("ExampleOrganization.Domain.Entities.Organization", "Parent")
-                        .WithMany("Children")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany()
+                        .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
-                });
-
-            modelBuilder.Entity("ExampleOrganization.Domain.Entities.Organization", b =>
-                {
-                    b.Navigation("AllChildren");
-
-                    b.Navigation("Children");
                 });
 #pragma warning restore 612, 618
         }
