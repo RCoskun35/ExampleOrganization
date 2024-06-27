@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ExampleOrganization.Domain.Dtos;
+using ExampleOrganization.Domain.Services;
 
 namespace ExampleOrganization.Domain.Entities
 {
-    public class Organization
+    public class Organization: IBaseHierarchyEntity
     {
         public int Id { get; set; }
         public string Name{ get; set; }=string.Empty;

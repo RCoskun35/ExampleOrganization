@@ -1,23 +1,13 @@
-﻿using ExampleOrganization.Domain.Entities;
+﻿using ExampleOrganization.Domain.Dtos;
 using ExampleOrganization.Domain.Repositories;
+using ExampleOrganization.Domain.Services;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.Xml;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Threading.Tasks;
-using TS.Result;
-using ExampleOrganization.Domain.Dtos;
 
 namespace ExampleOrganization.Application.Features.Auth.Organizations.Queries
 {
-    internal sealed class GetAllOrganizationsQueryHandler(IOrganizationRepository organizationRepository) : IRequestHandler<GetAllOrganizationsQuery, List<OrganizationResult>>
+    internal sealed class GetAllOrganizationsQueryHandler(IOrganizationRepository organizationRepository) : IRequestHandler<GetAllOrganizationsQuery, List<HierarchyResult>>
     {
-        public async Task<List<OrganizationResult>> Handle(GetAllOrganizationsQuery request, CancellationToken cancellationToken)
+        public async Task<List<HierarchyResult>> Handle(GetAllOrganizationsQuery request, CancellationToken cancellationToken)
         {
             var organizations = await organizationRepository.GetAllOrganizationWithParent();
           
