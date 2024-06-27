@@ -13,7 +13,7 @@ namespace ExampleOrganization.Domain.Dtos
         public string Name { get; set; } = string.Empty;
         public int? ParentOrganizationId { get; set; }
         public int Degree { get; set; }
-        public string Parents { get; set; } = string.Empty;
-        public string SubOrganizations { get; set; } = string.Empty;
+        public List<int> Parents { get; set; } = new List<int>();
+        public List<int> SubOrganizations { get; set; } = new List<int>();
     }
 }

@@ -25,10 +25,12 @@ namespace ExampleOrganization.Infrastructure.Repositories
             var organizations = await _context.Set<Organization>().ToListAsync();
             var organizationResults = new List<OrganizationResult>();
 
-            var organizationDict = organizations.ToDictionary(o => o.Id);
-
-            void AddOrganizationToResults(Organization org, int degree, string parents)
+            void AddOrganizationToResults(Organization org, int degree, List<int> parents)
             {
+                // Listeye tekrar eden eleman eklenmesini önlemek için yeni bir liste oluşturuyoruz
+                var currentParents = new List<int>(parents);
+                currentParents.Add(org.Id);
+
                 organizationResults.Add(new OrganizationResult
                 {
                     Id = organizationResults.Count + 1,
@@ -36,28 +38,28 @@ namespace ExampleOrganization.Infrastructure.Repositories
                     Name = org.Name,
                     ParentOrganizationId = org.ParentId,
                     Degree = degree,
-                    Parents = parents,
-                    SubOrganizations = ""
+                    Parents = currentParents
                 });
 
                 foreach (var child in organizations.Where(o => o.ParentId == org.Id))
                 {
-                    AddOrganizationToResults(child, degree + 1, parents + "," + child.Id);
+                    AddOrganizationToResults(child, degree + 1, currentParents);
                 }
             }
 
             foreach (var rootOrganization in organizations.Where(o => o.ParentId == null))
             {
-                AddOrganizationToResults(rootOrganization, 0, rootOrganization.Id.ToString());
+                AddOrganizationToResults(rootOrganization, 0, new List<int>());
             }
 
             // SubOrganizations alanını güncelle
             foreach (var orgResult in organizationResults)
             {
                 var subOrgs = organizationResults
-                    .Where(o => o.Parents.Contains("," + orgResult.OrganizationId + ",") || o.Parents.StartsWith(orgResult.OrganizationId + ",") || o.Parents.EndsWith("," + orgResult.OrganizationId) || o.Parents == orgResult.OrganizationId.ToString())
-                    .Select(o => o.OrganizationId.ToString());
-                orgResult.SubOrganizations = string.Join(",", subOrgs);
+                    .Where(o => o.Parents.Contains(orgResult.OrganizationId))
+                    .Select(o => o.OrganizationId).ToList();
+                subOrgs.Sort(); 
+                orgResult.SubOrganizations = subOrgs;
             }
 
             return organizationResults;
