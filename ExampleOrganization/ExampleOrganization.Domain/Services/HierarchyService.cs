@@ -24,23 +24,24 @@ namespace ExampleOrganization.Domain.Services
                     Degree = degree,
                     Parents = currentParents
                 });
-
+                var childEntites = entities.Where(o => o.ParentId == entity.Id);
                 foreach (var child in entities.Where(o => o.ParentId == entity.Id))
                 {
                     AddHierarchyToResults(child, degree + 1, currentParents);
                 }
             }
-            foreach (var rootOrganization in entities.Where(o => o.ParentId == null))
+            var rootEntities = entities.Where(o => o.ParentId == null);
+            foreach (var rootEntity in entities.Where(o => o.ParentId == null))
             {
-                AddHierarchyToResults(rootOrganization, 0, new List<int>());
+                AddHierarchyToResults(rootEntity, 0, new List<int>());
             }
-            foreach (var orgResult in result)
+            foreach (var entityResult in result)
             {
-                var subOrgs = result
-                    .Where(o => o.Parents.Contains(orgResult.EntityId))
+                var subEntities = result
+                    .Where(o => o.Parents.Contains(entityResult.EntityId))
                     .Select(o => o.EntityId).ToList();
-                subOrgs.Sort();
-                orgResult.SubEntities = subOrgs;
+                subEntities.Sort();
+                entityResult.SubEntities = subEntities;
             }
             return result;
         }
