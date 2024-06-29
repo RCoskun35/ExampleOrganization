@@ -1,5 +1,5 @@
 ﻿using ExampleOrganization.Domain.Dtos;
-using ExampleOrganization.Domain.Services;
+using GenericHierarchy;
 
 namespace ExampleOrganization.Domain.Entities
 {

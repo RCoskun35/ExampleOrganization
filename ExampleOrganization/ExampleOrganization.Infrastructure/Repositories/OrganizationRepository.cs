@@ -1,9 +1,9 @@
 ﻿using ExampleOrganization.Domain.Dtos;
 using ExampleOrganization.Domain.Entities;
 using ExampleOrganization.Domain.Repositories;
-using ExampleOrganization.Domain.Services;
 using ExampleOrganization.Infrastructure.Context;
 using ExampleOrganization.Infrastructure.Services;
+using GenericHierarchy;
 using GenericRepository;
 using Microsoft.EntityFrameworkCore;
 

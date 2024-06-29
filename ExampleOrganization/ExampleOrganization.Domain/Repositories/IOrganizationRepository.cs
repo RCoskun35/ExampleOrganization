@@ -1,6 +1,6 @@
 ﻿using ExampleOrganization.Domain.Dtos;
 using ExampleOrganization.Domain.Entities;
-using ExampleOrganization.Domain.Services;
+using GenericHierarchy;
 using GenericRepository;
 
 namespace ExampleOrganization.Domain.Repositories

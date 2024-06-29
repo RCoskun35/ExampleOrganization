@@ -1,5 +1,5 @@
 ﻿using ExampleOrganization.Domain.Dtos;
-using ExampleOrganization.Domain.Services;
+using GenericHierarchy;
 using MediatR;
 
 namespace ExampleOrganization.Application.Features.Auth.Organizations.Queries

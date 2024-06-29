@@ -1,8 +1,8 @@
 ﻿using ExampleOrganization.Application.Features.Auth.Organizations.Queries;
 using ExampleOrganization.Domain.Entities;
 using ExampleOrganization.Domain.Repositories;
-using ExampleOrganization.Domain.Services;
 using ExampleOrganization.WebAPI.Abstractions;
+using GenericHierarchy;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
