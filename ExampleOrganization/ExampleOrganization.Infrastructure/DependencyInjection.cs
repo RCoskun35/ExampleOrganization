@@ -23,7 +23,7 @@ namespace ExampleOrganization.Infrastructure
             services.AddScoped<IUnitOfWork>(srv => srv.GetRequiredService<ApplicationDbContext>());
 
             services
-                .AddIdentity<AppUser, IdentityRole<Guid>>(cfr =>
+                .AddIdentity<AppUser, IdentityRole<int>>(cfr =>
                 {
                     cfr.Password.RequiredLength = 1;
                     cfr.Password.RequireNonAlphanumeric = false;

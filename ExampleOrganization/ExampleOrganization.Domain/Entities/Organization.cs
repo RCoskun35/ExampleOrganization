@@ -8,7 +8,7 @@ namespace ExampleOrganization.Domain.Entities
         public int Id { get; set; }
         public string Name{ get; set; }=string.Empty;
         public int? ParentId { get; set; }
-        public Organization? Parent { get; set; }
+        //public Organization? Parent { get; set; }
 
     }
 }

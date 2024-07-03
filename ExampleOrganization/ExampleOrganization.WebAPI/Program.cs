@@ -14,7 +14,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddProblemDetails();
-
+builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddControllers();
                 //.AddJsonOptions(x =>
                 //    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
@@ -61,6 +61,6 @@ app.UseExceptionHandler();
 
 app.MapControllers();
 
-ExtensionsMiddleware.CreateFirstUser(app);
+ExtensionsMiddleware.CreatetUsers(app);
 
 app.Run();
