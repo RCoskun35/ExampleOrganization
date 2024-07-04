@@ -1,6 +1,7 @@
 ﻿using ExampleOrganization.Domain.Entities;
 using ExampleOrganization.Domain.Repositories;
 using ExampleOrganization.Infrastructure.Context;
+using GenericHierarchy;
 using GenericRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,16 +17,26 @@ namespace ExampleOrganization.Infrastructure.Repositories
 
         private readonly ApplicationDbContext _context;
         private readonly IUserOrganizationRepository _userOrganizationRepository;
-        public EmployeeRepository(ApplicationDbContext context, IUserOrganizationRepository userOrganizationRepository) : base(context)
+        private readonly IOrganizationRepository _organizationRepository;
+        public EmployeeRepository(ApplicationDbContext context, IUserOrganizationRepository userOrganizationRepository, IOrganizationRepository organizationRepository) : base(context)
         {
             _context = context;
             _userOrganizationRepository = userOrganizationRepository;
+            _organizationRepository = organizationRepository;
         }
 
         public async Task<List<Employee>> GetEmployeesToUser(int userId)
         {
             var userOrganizations = _userOrganizationRepository.Where(x => x.UserId == userId).Select(x=>x.OrganizationId).ToList();
-            var employees =await  _context.Set<Employee>().Include(x => x.Organization).Where(x=>userOrganizations.Contains(x.OrganizationId ?? 0)).ToListAsync(); 
+            var organizationList = await _organizationRepository.Where(x => userOrganizations.Contains(x.Id)).ToListAsync();
+            var hierarchyList= HierarchyService<Organization>.GetHierarchyResults(await _organizationRepository.GetAll().ToListAsync());
+            var userHierarchyList = hierarchyList.Where(x=>userOrganizations.Contains(x.EntityId)).ToList();
+            var subEntityIds = userHierarchyList.SelectMany(hr => hr.SubEntities).ToList();
+
+            var employees = await _context.Set<Employee>()
+                .Include(x => x.Organization)
+                .Where(e => subEntityIds.Contains(e.OrganizationId ?? 0))
+                .ToListAsync();
 
 
             return employees;

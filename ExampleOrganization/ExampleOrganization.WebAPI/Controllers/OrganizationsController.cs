@@ -132,7 +132,33 @@ namespace ExampleOrganization.WebAPI.Controllers
 
 
 
+        [HttpPost]
+        public async Task<IActionResult> AddOrganizationToUser(List<Organization> organizations)
+        {
+            try
+            {
+                var userId = Convert.ToInt32(_contextAccessor?.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value.ToString());
+                var deleteList = _userOrganizationRepository.Where(x => x.UserId == userId).ToList();
+                if (deleteList.Count>0)
+                {
+                     _userOrganizationRepository.DeleteRange(deleteList);
+                }
+                
+                await _userOrganizationRepository.AddRangeAsync(organizations.Select(x => new UserOrganization
+                {
+                    UserId = userId,
+                    OrganizationId = x.Id
+                }).ToList());
+                await _userOrganizationRepository.SaveChangesAsync();
+                return Ok(new Organization());
+            }
+            catch (Exception ex)
+            {
 
+                return BadRequest(ex.Message);
+            }
+          
+        } 
 
 
         private List<RelatedOrganization> GetElements(List<int> parents, List<Organization> list)
