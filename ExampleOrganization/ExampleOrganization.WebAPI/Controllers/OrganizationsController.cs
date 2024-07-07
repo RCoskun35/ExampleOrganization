@@ -1,6 +1,8 @@
 ﻿using ExampleOrganization.Application.Features.Auth.Organizations.Queries;
+using ExampleOrganization.Domain.Dtos;
 using ExampleOrganization.Domain.Entities;
 using ExampleOrganization.Domain.Repositories;
+using ExampleOrganization.Infrastructure.Utility;
 using ExampleOrganization.WebAPI.Abstractions;
 using GenericHierarchy;
 using MediatR;
@@ -33,6 +35,7 @@ namespace ExampleOrganization.WebAPI.Controllers
             var response = await _mediator.Send(request, cancellationToken);
             return Ok(response);
         }
+      
         [HttpPost]
         public async Task<IActionResult> GetOrganizationsWithParentsAndChilds()
         {
@@ -41,13 +44,13 @@ namespace ExampleOrganization.WebAPI.Controllers
             
             var result = infoList.Select(x => new OrganizationDto
             {
-                Id = x.Id,
+                Id = x.EntityId,
                 EntryId=x.EntityId,
                 Name = x.Name,
                 ParentEntityId = x.ParentEntityId,
                 Degree = x.Degree,
-                Parents = GetElements(x.Parents,list),
-                SubEntities = GetElements(x.SubEntities,list),
+                Parents =Elements.GetElements(x.Parents,list),
+                SubEntities =Elements.GetElements(x.SubEntities,list),
             });
 
             return Ok(result);
@@ -78,22 +81,17 @@ namespace ExampleOrganization.WebAPI.Controllers
             
             return Ok();
         }
-
         [HttpPost]
         public async Task<IActionResult> GetFullEmployees()
         {
             return Ok(await _employeeRepository.GetFullEmployees());
         }
-
         [HttpPost]
         public async Task<IActionResult> GetEmployeesToUser()
         {
             var userId =Convert.ToInt32(_contextAccessor?.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value.ToString());
             return Ok(await _employeeRepository.GetEmployeesToUser(userId));
         }
-
-
-
         [HttpPost]
         public async Task<IActionResult> AddUserOrganizations()
         {
@@ -118,7 +116,6 @@ namespace ExampleOrganization.WebAPI.Controllers
                 }
                 await _userOrganizationRepository.AddRangeAsync(userOrganizations);
                 await _userOrganizationRepository.SaveChangesAsync();
-                //var result = await _organizationRepository.AddUserOrganization(userOrganizations);
                 return Ok();
             }
             catch (Exception ex)
@@ -129,9 +126,6 @@ namespace ExampleOrganization.WebAPI.Controllers
            
 
         }
-
-
-
         [HttpPost]
         public async Task<IActionResult> AddOrganizationToUser(List<Organization> organizations)
         {
@@ -143,12 +137,12 @@ namespace ExampleOrganization.WebAPI.Controllers
                 {
                      _userOrganizationRepository.DeleteRange(deleteList);
                 }
-                
-                await _userOrganizationRepository.AddRangeAsync(organizations.Select(x => new UserOrganization
+                var orgList = organizations.Select(x => new UserOrganization
                 {
                     UserId = userId,
                     OrganizationId = x.Id
-                }).ToList());
+                }).ToList();
+                await _userOrganizationRepository.AddRangeAsync(orgList);
                 await _userOrganizationRepository.SaveChangesAsync();
                 return Ok(new Organization());
             }
@@ -158,44 +152,17 @@ namespace ExampleOrganization.WebAPI.Controllers
                 return BadRequest(ex.Message);
             }
           
-        } 
-
-
-        private List<RelatedOrganization> GetElements(List<int> parents, List<Organization> list)
-        {
-            List<RelatedOrganization> result = new List<RelatedOrganization>();
-
-            foreach (int parentId in parents)
-            {
-                Organization? parentOrg = list.FirstOrDefault(o => o.Id == parentId);
-                if (parentOrg != null)
-                {
-                    result.Add(new RelatedOrganization
-                    {
-                        Id = parentOrg.Id,
-                        Name = parentOrg.Name
-                    });
-                }
-            }
-
-            return result;
         }
 
-        public class OrganizationDto
+        [HttpPost]
+        public IActionResult Test()
         {
-            public int Id { get; set; }
-            public int EntryId { get; set; }
-            public int? ParentEntityId { get; set; }
-            public int Degree{ get; set; }
-            public string Name { get; set; } = string.Empty;
-            public List<RelatedOrganization> Parents { get; set; }=new List<RelatedOrganization>();
-            public List<RelatedOrganization> SubEntities { get; set; }=new List<RelatedOrganization>();
+            return Ok();
         }
-        public class RelatedOrganization
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }=string.Empty;
-        }
+       
+
+        
+      
 
 
 
