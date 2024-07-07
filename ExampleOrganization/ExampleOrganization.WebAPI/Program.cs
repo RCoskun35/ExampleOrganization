@@ -61,6 +61,6 @@ app.UseExceptionHandler();
 
 app.MapControllers();
 
-ExtensionsMiddleware.CreatetUsers(app);
+ExtensionsMiddleware.Seeds(app);
 
 app.Run();

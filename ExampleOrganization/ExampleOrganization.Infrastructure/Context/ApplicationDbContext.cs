@@ -7,7 +7,7 @@ using System.Reflection.Emit;
 
 namespace ExampleOrganization.Infrastructure.Context
 {
-    internal sealed class ApplicationDbContext : IdentityDbContext<AppUser, Role, int>, IUnitOfWork
+    public sealed class ApplicationDbContext : IdentityDbContext<AppUser, Role, int>, IUnitOfWork
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -16,6 +16,8 @@ namespace ExampleOrganization.Infrastructure.Context
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<UserOrganization> UserOrganizations { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<RoleMenu> RoleMenus { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

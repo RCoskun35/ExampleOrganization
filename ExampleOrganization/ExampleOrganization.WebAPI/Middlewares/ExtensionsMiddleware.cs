@@ -1,15 +1,17 @@
 ﻿using ExampleOrganization.Domain.Entities;
+using ExampleOrganization.Infrastructure.Context;
 using Microsoft.AspNetCore.Identity;
 
 namespace ExampleOrganization.WebAPI.Middlewares
 {
     public static class ExtensionsMiddleware
     {
-        public static void CreatetUsers(WebApplication app)
+        public static void Seeds(WebApplication app)
         {
             using (var scoped = app.Services.CreateScope())
             {
                 var userManager = scoped.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+                var context = scoped.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
                 if (!userManager.Users.Any(p => p.UserName == "admin"))
                 {
@@ -39,6 +41,12 @@ namespace ExampleOrganization.WebAPI.Middlewares
                         userManager.CreateAsync(user2, "1").Wait();
                     }
                 }
+                if(!context.Menus.Any())
+                {
+                   
+                }
+                
+
             }
         }
     }

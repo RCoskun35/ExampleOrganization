@@ -6,13 +6,13 @@ using ExampleOrganization.Infrastructure.Utility;
 using ExampleOrganization.WebAPI.Abstractions;
 using GenericHierarchy;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ExampleOrganization.WebAPI.Controllers
 {
-    
+
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class OrganizationsController : ApiController
@@ -20,6 +20,7 @@ namespace ExampleOrganization.WebAPI.Controllers
         private readonly IOrganizationRepository _organizationRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IUserOrganizationRepository _userOrganizationRepository;
+        
         private readonly IHttpContextAccessor _contextAccessor;
         public OrganizationsController(IMediator mediator, IOrganizationRepository organizationRepository, IEmployeeRepository employeeRepository, IUserOrganizationRepository userOrganizationRepository, IHttpContextAccessor contextAccessor) : base(mediator)
         {
@@ -154,25 +155,27 @@ namespace ExampleOrganization.WebAPI.Controllers
           
         }
 
+
+
+
         [HttpPost]
         public IActionResult Test()
         {
             return Ok();
         }
-       
+
+
+
+
+
+
+
+        //google'a istek at ve dönen değeri result değişkenine ata
+         
+
+
 
         
-      
-
-
-
-
-
-
-
-
-
-
 
 
 

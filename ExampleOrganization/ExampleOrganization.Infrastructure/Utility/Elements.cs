@@ -29,5 +29,24 @@ namespace ExampleOrganization.Infrastructure.Utility
 
             return result;
         }
+        public static List<RelatedOrganization> GetMenus(List<int> parents, List<Menu> list)
+        {
+            List<RelatedOrganization> result = new List<RelatedOrganization>();
+
+            foreach (int parentId in parents)
+            {
+                Menu? parentOrg = list.FirstOrDefault(o => o.Id == parentId);
+                if (parentOrg != null)
+                {
+                    result.Add(new RelatedOrganization
+                    {
+                        Id = parentOrg.Id,
+                        Name = parentOrg.Name
+                    });
+                }
+            }
+
+            return result;
+        }
     }
 }
