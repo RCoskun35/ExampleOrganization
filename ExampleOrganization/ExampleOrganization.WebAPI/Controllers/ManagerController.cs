@@ -165,7 +165,7 @@ namespace ExampleOrganization.WebAPI.Controllers
                 Degree = x.Degree,
                 Parents = Elements.GetMenus(x.Parents, list),
                 SubEntities = Elements.GetMenus(x.SubEntities, list),
-            });
+            }).Where(x=>x.Degree<2).ToList();
 
             return Ok(result);
         }

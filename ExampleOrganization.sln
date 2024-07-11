@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleOrganization.Application", "ExampleOrganization\ExampleOrganization.Application\ExampleOrganization.Application.csproj", "{70D8754D-F300-4C46-ACE8-04AB9A7D48EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleOrganization.Application", "ExampleOrganization\ExampleOrganization.Application\ExampleOrganization.Application.csproj", "{70D8754D-F300-4C46-ACE8-04AB9A7D48EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleOrganization.Domain", "ExampleOrganization\ExampleOrganization.Domain\ExampleOrganization.Domain.csproj", "{AF621A60-E364-48F1-9C22-E87E39B83D41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleOrganization.Domain", "ExampleOrganization\ExampleOrganization.Domain\ExampleOrganization.Domain.csproj", "{AF621A60-E364-48F1-9C22-E87E39B83D41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleOrganization.Infrastructure", "ExampleOrganization\ExampleOrganization.Infrastructure\ExampleOrganization.Infrastructure.csproj", "{156FF856-5375-4EC0-AA54-E6969D6DBAD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleOrganization.Infrastructure", "ExampleOrganization\ExampleOrganization.Infrastructure\ExampleOrganization.Infrastructure.csproj", "{156FF856-5375-4EC0-AA54-E6969D6DBAD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleOrganization.WebAPI", "ExampleOrganization\ExampleOrganization.WebAPI\ExampleOrganization.WebAPI.csproj", "{DFEF2352-B7D7-4FB4-8455-F205F0A0C4B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleOrganization.WebAPI", "ExampleOrganization\ExampleOrganization.WebAPI\ExampleOrganization.WebAPI.csproj", "{DFEF2352-B7D7-4FB4-8455-F205F0A0C4B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{53128397-FEEC-462F-9325-C4AC6D8984F4}"
+	ProjectSection(SolutionItems) = preProject
+		fn_OrganizationListWithSubOrganizations.sql = fn_OrganizationListWithSubOrganizations.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

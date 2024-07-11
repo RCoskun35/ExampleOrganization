@@ -8,7 +8,6 @@ using GenericHierarchy;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ExampleOrganization.WebAPI.Controllers
 {
@@ -42,6 +41,7 @@ namespace ExampleOrganization.WebAPI.Controllers
         {
             var list =await _organizationRepository.GetAll().ToListAsync();
             var infoList = HierarchyService<Organization>.GetHierarchyResults(list);
+
             
             var result = infoList.Select(x => new OrganizationDto
             {
@@ -155,9 +155,10 @@ namespace ExampleOrganization.WebAPI.Controllers
           
         }
 
-
-
-
+        
+        
+        
+        
         [HttpPost]
         public IActionResult Test()
         {
@@ -166,11 +167,6 @@ namespace ExampleOrganization.WebAPI.Controllers
 
 
 
-
-
-
-
-        //google'a istek at ve dönen değeri result değişkenine ata
          
 
 
