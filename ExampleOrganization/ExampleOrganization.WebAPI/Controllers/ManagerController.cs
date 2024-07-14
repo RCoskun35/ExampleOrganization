@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CognitiveServices.Speech.Transcription;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExampleOrganization.WebAPI.Controllers
@@ -105,6 +106,24 @@ namespace ExampleOrganization.WebAPI.Controllers
             }
             return Ok(userResult);
         }
+        [NonAction]
+        public async Task RemoveAllRolesFromUserAsync(AppUser user)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+
+            if (roles.Any())
+            {
+                var result = await _userManager.RemoveFromRolesAsync(user, roles);
+
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        Console.WriteLine($"Error: {error.Description}");
+                    }
+                }
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> AddUserRole(UserAndRole userAndRole)
         {
@@ -115,6 +134,7 @@ namespace ExampleOrganization.WebAPI.Controllers
                 try
                 {
                     var roleNames = userAndRole.Roles.Select(x => x.Name ?? "").ToList();
+                    await RemoveAllRolesFromUserAsync(user);
                     var result = await _userManager.AddToRolesAsync(user, roleNames);
 
                     if (!result.Succeeded)
