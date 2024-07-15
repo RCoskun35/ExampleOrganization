@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Monikers.imagemanifest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <content Include="Monikers.imagemanifest">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Ardalis.SmartEnum" Version="8.0.0" />
     <PackageReference Include="GenericHierarchyService" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />

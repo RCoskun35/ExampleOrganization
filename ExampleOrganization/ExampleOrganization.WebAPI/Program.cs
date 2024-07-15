@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDefaultCors();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddMemoryCache();
 
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Services.AddProblemDetails();

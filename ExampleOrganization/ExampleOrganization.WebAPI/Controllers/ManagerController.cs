@@ -34,7 +34,7 @@ namespace ExampleOrganization.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> GetRoles()
         {
-            var users = await _userManager.Users.ToListAsync();
+            
             return Ok(await _roleManager.Roles.ToListAsync());  
         }
 

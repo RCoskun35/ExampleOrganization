@@ -18,6 +18,7 @@ namespace ExampleOrganization.Infrastructure.Context
         public DbSet<UserOrganization> UserOrganizations { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<RoleMenu> RoleMenus { get; set; }
+        public DbSet<RoleModule> RoleModules { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

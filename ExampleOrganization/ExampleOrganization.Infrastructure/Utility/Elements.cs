@@ -1,5 +1,6 @@
 ﻿using ExampleOrganization.Domain.Dtos;
 using ExampleOrganization.Domain.Entities;
+using ExampleOrganization.Infrastructure.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,25 @@ namespace ExampleOrganization.Infrastructure.Utility
                     {
                         Id = parentOrg.Id,
                         Name = parentOrg.Name
+                    });
+                }
+            }
+
+            return result;
+        }
+        public static List<RelatedOrganization> GetModules(List<int> parents, List<Module> list)
+        {
+            List<RelatedOrganization> result = new List<RelatedOrganization>();
+
+            foreach (int parentId in parents)
+            {
+                Module? parentModule = list.FirstOrDefault(o => o.Id == parentId);
+                if (parentModule != null)
+                {
+                    result.Add(new RelatedOrganization
+                    {
+                        Id = parentModule.Id,
+                        Name = parentModule.Name
                     });
                 }
             }
