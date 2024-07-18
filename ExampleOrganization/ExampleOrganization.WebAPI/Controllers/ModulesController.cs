@@ -30,11 +30,6 @@ namespace ExampleOrganization.WebAPI.Controllers
             _contextAccessor = contextAccessor;
             _memoryCache = memoryCache;
         }
-
-
-
-
-
         [HttpPost]
         public IActionResult GetModules()
         {
@@ -73,22 +68,22 @@ namespace ExampleOrganization.WebAPI.Controllers
         {
             return Ok(ModuleRepository.UpdateModule(module));
         }
-
-
         [HttpPost]
         public async Task<IActionResult> GetRoles()
         {
             var roles = await _roleManager.Roles.ToListAsync();
             var roleModules = await _roleModuleRepository.GetAll().ToListAsync();
             var modules = ModuleRepository.GetModules();
+            var hierarchyModules = HierarchyService<Module>.GetHierarchyResults(modules);
             var result = roles.Select(role => new
             {
                 role.Id,
                 role.Name,
-                Modules = roleModules
-                    .Where(rm => rm.RoleId == role.Id)
-                    .Select(rm => modules.FirstOrDefault(m => m.Id == rm.ModuleId)?.Name)
-                    .ToList()
+                //Modules = roleModules
+                //    .Where(rm => rm.RoleId == role.Id)
+                //    .Select(rm => modules.FirstOrDefault(m => m.Id == rm.ModuleId)?.Name)
+                //    .ToList(),
+                Modules = hierarchyModules.Where(x => roleModules.Where(z=>z.RoleId==role.Id).Select(a => a.ModuleId).Contains(x.EntityId)).SelectMany(a => a.SubEntities.Select(y => ModuleRepository.ModuleName(y))).ToList()
             }).ToList();
 
             return Ok(result);
@@ -137,7 +132,7 @@ namespace ExampleOrganization.WebAPI.Controllers
                         if (modules.Count > 0)
                         {
                             var list = hierarchyModules.Where(x => modules.Contains(x.EntityId)).SelectMany(a => a.SubEntities.Select(y => ModuleRepository.ModuleName(y))).ToList();
-                            userModule.Modules = list;
+                            userModule.Modules.AddRange(list);
                         }
 
                     }
@@ -179,10 +174,10 @@ namespace ExampleOrganization.WebAPI.Controllers
                         if (modules.Count > 0)
                         {
                             var list = hierarchyModules.Where(x => modules.Contains(x.EntityId)).SelectMany(a => a.SubEntities.Select(y => y.ToString())).ToList();
-                            userModule.Modules = list;
+                            userModule.Modules.AddRange(list);
 
                             var list2 = hierarchyModules.Where(x => modules.Contains(x.EntityId)).SelectMany(a => a.Parents.Select(y => y.ToString())).ToList();
-                            userModule.Parents = list2;
+                            userModule.Parents.AddRange(list2);
                         }
 
                     }

@@ -32,7 +32,7 @@ namespace ExampleOrganization.Infrastructure.Modules
     }
     public static class ModuleRepository 
     {
-     private static List<Module> modules = new List<Module>
+        private static List<Module> modules = new List<Module>
     {
         new Module { Id = (int)ModuleType.Anasayfa, Name = "Anasayfa", ParentId = null },
         new Module { Id = (int)ModuleType.Dashboard, Name = "Dashboard", ParentId = (int?)ModuleType.Anasayfa },
